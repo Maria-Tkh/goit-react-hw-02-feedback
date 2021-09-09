@@ -1,6 +1,8 @@
 import { Component } from 'react';
 import { FeedbackOptions } from 'components/FeedbackOptions/FeedbackOptions';
-// import { Statistics } from './Statistics/Statistics';
+import { Statistics } from './Statistics/Statistics';
+import { Section } from './Section/Section';
+import { NotificationMessage } from './NotificationMessage/NotificatioMessage';
 
 export class App extends Component {
   state = {
@@ -10,31 +12,41 @@ export class App extends Component {
   };
 
   handleCounter = option => {
-    console.log(option);
-
     this.setState(prevState => ({
-      [option]: prevState.state[option] + 1,
+      [option]: prevState[option] + 1,
     }));
   };
 
   render() {
-    // const countTotalFeedback = options.reduce((totalFeedback, option) => totalFeedback+[option], 0);
-    // // // console.log(countTotalFeedback);
-    // const countPositiveFeedbackPercentage = Math.round(option.good * 100 / countTotalFeedback);
+    const { good, neutral, bad } = this.state;
+
+    const countTotalFeedback = good + neutral + bad;
+
+    const countPositiveFeedbackPercentage = Math.round((good * 100) / countTotalFeedback);
 
     return (
-      <section>
-        <h1 className="title">Please leave feedback </h1>
+      <>
+        <Section title="Please leave feedback">
+          <FeedbackOptions
+            options={['good', 'neutral', 'bad']}
+            onLeaveFeedback={this.handleCounter}
+          />
+        </Section>
 
-        <FeedbackOptions
-          options={['good', 'neutral', 'bad']}
-          onLeaveFeedback={this.handleCounter}
-        />
-        {/* <Statistics good={[option]} neutral={[option]} bad={[option]}
-                    // total={countTotalFeedback}
-                    // positivePercentage={countPositiveFeedbackPercentage}
-                /> */}
-      </section>
+        {countTotalFeedback > 0 ? (
+          <Section title="Statistics">
+            <Statistics
+              good={good}
+              neutral={neutral}
+              bad={bad}
+              total={countTotalFeedback}
+              positivePercentage={countPositiveFeedbackPercentage}
+            />
+          </Section>
+        ) : (
+          <NotificationMessage message="No feedback given" />
+        )}
+      </>
     );
   }
 }
