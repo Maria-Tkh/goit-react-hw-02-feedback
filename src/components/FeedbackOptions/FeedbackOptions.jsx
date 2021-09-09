@@ -7,7 +7,11 @@ export const FeedbackOptions = ({ options, onLeaveFeedback }) => {
         <button
           type="button"
           name="option"
-          onClick={onLeaveFeedback}
+          onClick={() => {
+            onLeaveFeedback(option);
+            console.log(option);
+          }}
+
           //  value={ this.state[option]}
         >
           {option}
