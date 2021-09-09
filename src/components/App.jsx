@@ -9,8 +9,9 @@ export class App extends Component {
     bad: 0,
   };
 
-  handleCounter = ({ option }) => {
+  handleCounter = option => {
     console.log(option);
+
     this.setState(prevState => ({
       [option]: prevState.state[option] + 1,
     }));
