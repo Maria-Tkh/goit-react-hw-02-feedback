@@ -1,0 +1,9 @@
+button {
+  font-weight: bold;
+  margin: 10px;
+  width: 60px;
+  height: 30px;
+  color: rgb(71, 56, 56);
+  background-color: blanchedalmond;
+  border: rgb(221, 131, 13);
+}
